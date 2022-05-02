@@ -1,0 +1,44 @@
+<%- include('../partials/header.ejs')%>
+<div class="background">
+    <form action="/post/<%=group._id%>/create" method="post" class="form">
+        <table class="table">
+            <tr>
+                <td><input type="text" id="title" name="title" placeholder="Enter caption"></td>
+            </tr>
+            <tr>
+                
+                <td><textarea name="text" id="text" cols="30" rows="10" placeholder="Enter Description"></textarea></td>
+            </tr>
+            <tr><td><h3>Import an Image</h3></td></tr>
+            <tr>
+                <td><input class = "input" type="file" name="image" id="image" placeholder="choose image"></td>
+            </tr>
+            <tr>
+                <td><button class="button">Post</button></td>
+            </tr>
+            <caption><h2>Create New Post To: <%=group.name%></h2></caption>
+            
+        </table>
+    </form>
+</div>
+<%- include('../partials/footer.ejs')%>
+
+<style>
+    .input{
+        border: none;
+    }
+    .table{
+        padding-top: 20%;
+    }
+    .form{
+        background-color: white;
+        padding-right: 10%;
+        padding-left: 10%;
+        padding-top: 5%;
+        padding-bottom: 10%;
+    }
+    .background{
+        padding-top: 5%;
+        background-color: #2ea44f;
+    }
+</style>

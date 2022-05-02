@@ -1,0 +1,134 @@
+<%- include('../partials/header.ejs')%>
+<div class="groupPage">
+	<table class="table">
+		<tr>
+			<td width="900px"><h2 class="title"><%=group.name%></h2></td>
+			<%if(group.members.includes(user)) {%>
+			<td><a class="button" href="/post/<%=group.id%>/new">New Post</a></td>
+      <td><form action="/group/<%=group.id%>/addMember?_method=PUT" method="post">
+	      <button class="button">Add Member</button>
+      </form></td>
+			<%} else if(user) {%>
+			<td>
+        <form action="/group/<%=group.id%>/joinGroup?_method=PUT" method="post">
+          <button class="button">Join Group</button>
+        </form>
+			</td>
+			<%}%>
+		</tr>
+	</table>
+  <%let count = 0; if(posts) { posts.forEach(post => { %>
+    <%if(post.GroupID == group.id) { count++; %>
+      <table class="post">
+        <tr>
+          <td class="post"><%=post.image%></td>
+        </tr>
+        <tr>
+          <th class="post"><%=post.title%></th>
+        </tr>
+        <tr>
+          <td class="post"><%=post.text%></td>
+        </tr> 
+        <%if(post.Author == user) { %>
+        <tr><td><form action="/post/<%=group.id%>/delete/<%=post.id%>?_method=DELETE" method="post"><button class="button">Delete</button></form></td></tr>
+        <%}%> 
+      </table>
+    <%}})}%>
+
+
+    <div class="post">
+    <%if(count == 0 && group.members.includes(user)){%>
+      <tr><td><h2>Nobody has posted to <%=group.name%> | </h2></td></tr>
+          <tr><td><h2>| Be the first to post!</h2></td></tr>
+    <%} else if(count == 0 && !(group.members.includes(user))){%>
+      <tr><th><h2>Nobody has posted to <%=group.name%> |</h2></th></tr>
+          <tr><th><h2>| Join this group and be the first  to post!</h2></th></tr>
+          <%}%>
+        </div>
+</div>
+<%- include('../partials/footer.ejs')%>
+<style>
+  .post{ 
+    background-color: #fff;
+		display: flex;
+		justify-content: center;
+		border-spacing: 10%;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .post th {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+	.groupPage {
+		background-color: #2ea44f;
+		padding: 5% 15% 10% 15%;
+	}
+	.title {
+		font-style: oblique;
+		font-family: sans-serif;
+		font-size: 40px;
+		color: black;
+		padding-right: 20%;
+		padding-left: 5%;
+	}
+	.table {
+		background-color: #fff;
+		display: flex;
+		justify-content: left;
+		border-spacing: 10%;
+	}
+	.button {
+		appearance: none;
+		background-color: #2ea44f;
+		border: 1px solid rgba(27, 31, 35, 0.15);
+		border-radius: 6px;
+		box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+		box-sizing: border-box;
+		color: #fff;
+		cursor: pointer;
+		display: inline-block;
+		font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+			sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		padding: 6px 16px;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+
+	.button:focus:not(:focus-visible):not(.focus-visible) {
+		box-shadow: none;
+		outline: none;
+	}
+
+	.button:hover {
+		background-color: #2c974b;
+	}
+
+	.button:focus {
+		box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;
+		outline: none;
+	}
+
+	.button:disabled {
+		background-color: #94d3a2;
+		border-color: rgba(27, 31, 35, 0.1);
+		color: rgba(255, 255, 255, 0.8);
+		cursor: default;
+	}
+
+	.button:active {
+		background-color: #298e46;
+		box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+	}
+</style>
