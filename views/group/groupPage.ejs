@@ -5,9 +5,6 @@
 			<td width="900px"><h2 class="title"><%=group.name%></h2></td>
 			<%if(group.members.includes(user)) {%>
 			<td><a class="button" href="/post/<%=group.id%>/new">New Post</a></td>
-      <td><form action="/group/<%=group.id%>/addMember?_method=PUT" method="post">
-	      <button class="button">Add Member</button>
-      </form></td>
 			<%} else if(user) {%>
 			<td>
         <form action="/group/<%=group.id%>/joinGroup?_method=PUT" method="post">
@@ -20,9 +17,6 @@
   <%let count = 0; if(posts) { posts.forEach(post => { %>
     <%if(post.GroupID == group.id) { count++; %>
       <table class="post">
-        <tr>
-          <td class="post"><%=post.image%></td>
-        </tr>
         <tr>
           <th class="post"><%=post.title%></th>
         </tr>
